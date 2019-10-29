@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.3-fpm AS prod
 USER root
 
 # Configuration setup
@@ -14,4 +14,9 @@ ADD ./app/ /app/
 WORKDIR /app/
 RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader --no-scripts --no-plugins
 COPY ./Docker/php/entrypoint.sh /entrypoint.sh
+RUN ["chmod", "+x", "/entrypoint.sh"]
+
+FROM prod AS dev
+
+COPY ./Docker/php/entrypoint-dev.sh /entrypoint.sh
 RUN ["chmod", "+x", "/entrypoint.sh"]

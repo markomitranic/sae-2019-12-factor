@@ -20,6 +20,7 @@ services:
     build:
       context: ../
       dockerfile: ./Docker/php/Dockerfile
+      target: ${ENV}
     environment:
       APP_ENV: ${ENV}
       APP_DEBUG: ${APP_DEBUG}
